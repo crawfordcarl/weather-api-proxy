@@ -3,15 +3,22 @@ import { Table } from 'react-bootstrap';
 import WeatherRow from './WeatherRow';
 
 function WeatherTable(props) {
+  if(!props.data || props.data.length === 0) {
+    return (<h3>No data to show</h3>);
+  }
 
-  let data = props.data ? props.data : [1, 2, 3];
-  let tableRows = data.map((item) => (<WeatherRow {...item} />));
+  let tableRows = props.data.map(
+    (item) => (<WeatherRow {...item} key={item.time}/>));
   return (
     <Table responsive striped bordered hover>
       <thead>
         <tr>
-          <th>Head1</th>
-          <th>Head2</th>
+          <th>Time</th>
+          <th>Condition</th>
+          <th>Temp</th>
+          <th>Feels Like</th>
+          <th>Wind Direction</th>
+          <th>Wind Speed</th>
         </tr>
       </thead>
       <tbody>

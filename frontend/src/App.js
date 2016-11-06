@@ -11,18 +11,21 @@ class App extends Component {
     super(props);
 
     this.state = {
-      weatherData: [],
+      weatherData: {},
     };
   }
 
   componentWillMount() {
     API.fetch(
       'http://138.68.156.60/api/location/',
-      weatherData => this.setState
+      weatherData => { this.setState({ weatherData }); }
     );
   }
 
   render () {
+    console.log(this.state.weatherData);
+    const dayForecast = this.state.weatherData.forecast ?
+      this.state.weatherData.forecast.forecastday[0].hour : [];
     return (
       <div className="App">
         <div className="App-header">
@@ -31,10 +34,7 @@ class App extends Component {
         </div>
         <WeatherForm />
         <WeatherChart />
-        <WeatherTable />
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <WeatherTable data={dayForecast} />
       </div>
     );
   }
