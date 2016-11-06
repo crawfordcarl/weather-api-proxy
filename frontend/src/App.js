@@ -13,6 +13,8 @@ class App extends Component {
     this.state = {
       weatherData: {},
     };
+
+    this.fetchWeatherByLocation = this.fetchWeatherByLocation.bind(this);
   }
 
   componentWillMount() {
