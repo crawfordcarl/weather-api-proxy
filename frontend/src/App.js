@@ -22,6 +22,13 @@ class App extends Component {
     );
   }
 
+  fetchWeatherByLocation(location) {
+    API.fetch(
+      `http://138.68.156.60/api/location/${location}/`,
+      weatherData => { this.setState({ weatherData }); }
+    );
+  }
+
   render () {
     console.log(this.state.weatherData);
     const dayForecast = this.state.weatherData.forecast ?
@@ -32,7 +39,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Weather API</h2>
         </div>
-        <WeatherForm />
+        <WeatherForm onSubmit={this.fetchWeatherByLocation}/>
         <WeatherChart />
         <WeatherTable data={dayForecast} />
       </div>
