@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import ConfigParser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# CONFIG for gettings keys and stuff
+config = ConfigParser.ConfigParser()
+config_file = os.path.join(BASE_DIR, 'local_settings.ini')
+if os.path.isfile(config_file):
+    config.read(config_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -81,10 +87,10 @@ WSGI_APPLICATION = 'weatherapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-	'NAME': 'weatherapi',
-	'USER': 'weatherapi',
-	'PASSWORD': 'weatherapi',
-	'HOST': 'localhost',
+	'NAME': config.get('db', 'name', 'weatherapi'),
+	'USER': config.get('db', 'user', 'weatherapi'),
+	'PASSWORD': config.get('db', 'pass', 'weatherapi'),
+	'HOST': config.get('db', 'host', 'localhost'),
 	'PORT': '',
     }
 }
