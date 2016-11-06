@@ -24,7 +24,13 @@ def default_location(request):
     return HttpResponse(r.text)
 
 def has_location(request, location):
-    return HttpResponse(location)
+    payload = {
+	'q': location,
+        'dt': datetime.today().strftime('%Y-%m-%d'),
+        'key': apikey
+    }
+    r = requests.get('http://api.apixu.com/v1/history.json', params=payload)
+    return HttpResponse(r.text)
 
 def date_start(request, location, start):
     return HttpResponse(start)
