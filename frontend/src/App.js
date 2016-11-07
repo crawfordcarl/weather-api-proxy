@@ -13,11 +13,20 @@ class App extends Component {
     this.state = {
       weatherData: {},
     };
+
+    this.fetchWeatherByLocation = this.fetchWeatherByLocation.bind(this);
   }
 
   componentWillMount() {
     API.fetch(
       'http://138.68.156.60/api/location/',
+      weatherData => { this.setState({ weatherData }); }
+    );
+  }
+
+  fetchWeatherByLocation(location) {
+    API.fetch(
+      `http://138.68.156.60/api/location/${location}/`,
       weatherData => { this.setState({ weatherData }); }
     );
   }
@@ -32,7 +41,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Weather API</h2>
         </div>
-        <WeatherForm />
+        <WeatherForm onSubmit={this.fetchWeatherByLocation}/>
         <WeatherChart />
         <WeatherTable data={dayForecast} />
       </div>
