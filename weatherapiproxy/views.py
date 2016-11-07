@@ -6,6 +6,7 @@ import os
 import ConfigParser
 
 apikey = '3569cf2928bc4988b27144752160611'
+apixu_url = 'http://api.apixu.com/v1/history.json'
 
 def index(request):
     return render(request, 'weatherapiproxy/index.html')
@@ -20,7 +21,7 @@ def default_location(request):
         'key': apikey
     }
     
-    r = requests.get('http://api.apixu.com/v1/history.json', params=payload)
+    r = requests.get(apixu_url, params=payload)
     return HttpResponse(r.text)
 
 def has_location(request, location):
@@ -29,11 +30,18 @@ def has_location(request, location):
         'dt': datetime.today().strftime('%Y-%m-%d'),
         'key': apikey
     }
-    r = requests.get('http://api.apixu.com/v1/history.json', params=payload)
+    r = requests.get(apixu_url, params=payload)
     return HttpResponse(r.text)
 
 def date_start(request, location, start):
-    return HttpResponse(start)
+    date_start = datetime.fromtimestamp(float(start))
+    payload = {
+        'q': location,
+        'dt': date_start.strftime('%Y-%m-%d'),
+        'key': apikey
+    }
+    r = requests.get(apixu_url, params=payload)
+    return HttpResponse(r.text)
 
 def date_end(request, location, start, end):
-    return HttpResponse(end)
+    return HttpResponse('The Apixu API doesn\'t support end dates - see Readme on github')
