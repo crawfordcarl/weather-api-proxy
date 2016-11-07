@@ -6,6 +6,7 @@
 - {location} can be latlng, a city name, postcode, even an IP address
 - {timestamp} is a unix timestamp
 - Note: /end/{timestamp} will just give you some useless text due to limitations on the Apixu api, see below.
+- An example usage is http://138.68.156.60/api/location/London/start/1477958400/
 
 - Django 1.10 using views acting as a proxy to the Apixu weather API. Urls are written by hand, could have used DRF or Tastypie but I didn't want to overengineer the solution. Served through nginx and gunicorn.
 
